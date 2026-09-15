@@ -3,160 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ICT 11 - PSTS1</title>
+    <title>Halaman Web Responsive</title>
     <style>
+        /* Reset dasar */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        /* Desain latar belakang dan tata letak tengah */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background-color: #ffffff;
-            background-image: 
-                radial-gradient(#e0e7ff 1.2px, transparent 1.2px),
-                linear-gradient(to right, #f8fafc 1px, transparent 1px),
-                linear-gradient(to bottom, #f8fafc 1px, transparent 1px);
-            background-size: 24px 24px, 40px 40px, 40px 40px;
             padding: 20px;
-            color: #0f172a;
         }
 
+        /* Container utama */
         .container {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 30px 25px;
-            border-radius: 16px;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 10px 25px -5px rgba(14, 165, 233, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
-            text-align: center;
+            background-color: #ffffff;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 420px;
-            position: relative;
+            max-width: 500px;
+            text-align: center;
         }
 
-        .iot-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            color: #166534;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            margin-bottom: 15px;
-            text-transform: uppercase;
+        h1 {
+            color: #333333;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
         }
 
-        .pulse-dot {
-            width: 8px;
-            height: 8px;
-            background-color: #22c55e;
-            border-radius: 50%;
-            box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
-            animation: pulse 1.8s infinite;
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(0.95);
-                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
-            }
-            70% {
-                transform: scale(1);
-                box-shadow: 0 0 0 8px rgba(34, 197, 94, 0);
-            }
-            100% {
-                transform: scale(0.95);
-                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
-            }
-        }
-
-        h2 {
-            font-size: 1.25rem;
-            color: #0f172a;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-        }
-
-        h3 {
-            font-size: 0.95rem;
-            color: #0284c7;
-            font-weight: 600;
-            margin-top: 4px;
-        }
-
+        /* Group tombol (Flexbox) */
         .button-group {
             display: flex;
-            flex-direction: column;
-            gap: 14px;
-            margin-top: 25px;
+            flex-direction: column; /* Menumpuk secara vertikal di layar kecil */
+            gap: 15px; /* Jarak antartombol */
         }
 
-        .btn-control {
-            position: relative;
+        /* Desain umum tombol */
+        .btn {
+            display: block;
             padding: 14px 20px;
-            font-size: 15px;
+            text-decoration: none;
+            color: white;
             font-weight: 600;
-            color: #ffffff;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            width: 100%;
-            word-break: break-all;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            font-size: 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
-        .btn-control::before {
-            content: "☊";
-            font-size: 12px;
-            opacity: 0.8;
-        }
-
-        #btn1 {
-            background: linear-gradient(135deg, #0284c7, #0369a1);
-        }
-        #btn2 {
-            background: linear-gradient(135deg, #0d9488, #0f766e);
-        }
-        #btn3 {
-            background: linear-gradient(135deg, #6366f1, #4f46e5);
-        }
-
-        .btn-control:hover {
+        /* Efek hover (saat kursor di atas tombol) */
+        .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 15px -3px rgba(2, 132, 199, 0.3);
-            filter: brightness(1.05);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
         }
 
-        .btn-control:active {
-            transform: translateY(0);
+        /* Warna masing-masing tombol */
+        .btn-google {
+            background-color: #4285F4;
+        }
+        .btn-google:hover {
+            background-color: #3367d6;
         }
 
-        @media (min-width: 640px) {
+        .btn-youtube {
+            background-color: #FF0000;
+        }
+        .btn-youtube:hover {
+            background-color: #cc0000;
+        }
+
+        .btn-github {
+            background-color: #24292e;
+        }
+        .btn-github:hover {
+            background-color: #1b1e21;
+        }
+        @media (min-width: 600px) {
             .container {
-                max-width: 720px;
-                padding: 35px;
+                max-width: 700px;
+                padding: 50px;
             }
-
             .button-group {
                 flex-direction: row;
+                justify-content: center;
             }
 
-            .btn-control {
-                flex: 1;
+            .btn {
+                flex: 1; 
             }
         }
     </style>
@@ -164,130 +106,13 @@
 <body>
 
     <div class="container">
-        <div class="iot-status">
-            <span class="pulse-dot"></span> IoT Control Hub Active
-        </div>
-        <h2>PRACTICAL EXAM (IoT) - PSTS 1</h2>
-        <h3>ICT XI</h3>
-        
+        <h1>PRACTICAL EXAM QUESTION -  ICT XI</h1>
         <div class="button-group">
-            <button id="btn1" class="btn-control">Tombol 1</button>
-            <button id="btn2" class="btn-control">Tombol 2</button>
-            <button id="btn3" class="btn-control">Tombol 3</button>
+            <a href="https://www.google.com" target="_blank" class="btn btn-google">Google</a>
+            <a href="https://www.youtube.com" target="_blank" class="btn btn-youtube">YouTube</a>
+            <a href="https://www.github.com" target="_blank" class="btn btn-github">GitHub</a>
         </div>
     </div>
-
-    <script>
-        class HyperlinkController {
-            constructor(passwordHash) {
-                this.secretHash = passwordHash;
-                this.storageKey = 'ict_exam_links';
-                
-                this.defaultLinks = {
-                    1: "https://drive.google.com/file/d/1sB5PdfaTXRTdFhxnElIzU3U4_qM8h9u4/view?usp=drive_link", // Link untuk Tombol 1
-                    2: "https://forms.google.com", // Link untuk Tombol 2
-                    3: "https://classroom.google.com" // Link untuk Tombol 3
-                };
-                
-                this.links = this.loadLinks();
-                this.init();
-            }
-
-            loadLinks() {
-                const savedData = localStorage.getItem(this.storageKey);
-                if (savedData) {
-                    try {
-                        return JSON.parse(savedData);
-                    } catch (e) {
-                        console.error("Gagal membaca data tersimpan:", e);
-                    }
-                }
-                return { ...this.defaultLinks };
-            }
-
-            saveLinks() {
-                try {
-                    localStorage.setItem(this.storageKey, JSON.stringify(this.links));
-                } catch (e) {
-                    console.error("Gagal menyimpan data:", e);
-                }
-            }
-
-            init() {
-                for (let i = 1; i <= 3; i++) {
-                    const btn = document.getElementById(`btn${i}`);
-                    btn.addEventListener('click', () => this.handleClick(i));
-                    btn.addEventListener('contextmenu', (e) => {
-                        e.preventDefault();
-                        this.editLinkWithAuth(i);
-                    });
-                }
-                this.updateUI();
-            }
-
-            updateUI() {
-                for (let i = 1; i <= 3; i++) {
-                    const btn = document.getElementById(`btn${i}`);
-                    if (this.links[i]) {
-                        try {
-                            const hostname = new URL(this.links[i]).hostname;
-                            btn.innerText = `Node ${i} (${hostname})`;
-                        } catch (e) {
-                            btn.innerText = `Node ${i}`;
-                        }
-                    } else {
-                        btn.innerText = `Node ${i} (Belum Diatur)`;
-                    }
-                }
-            }
-
-            handleClick(id) {
-                if (this.links[id]) {
-                    window.open(this.links[id], '_blank');
-                } else {
-                    this.editLinkWithAuth(id);
-                }
-            }
-
-            authenticate() {
-                const inputPassword = prompt("Masukkan password untuk mengubah hyperlink:");
-                if (inputPassword === null) return false;
-
-                if (btoa(inputPassword.trim()) === this.secretHash) {
-                    return true;
-                } else {
-                    alert("Password salah! Akses ditolak.");
-                    return false;
-                }
-            }
-
-            editLinkWithAuth(id) {
-                if (!this.authenticate()) return;
-
-                let userUrl = prompt("Masukkan Hyperlink baru:", this.links[id] || "https://");
-                if (userUrl !== null) {
-                    userUrl = userUrl.trim();
-                    if (userUrl !== "") {
-                        if (!userUrl.startsWith("http://") && !userUrl.startsWith("https://")) {
-                            userUrl = "https://" + userUrl;
-                        }
-                        this.links[id] = userUrl;
-                    } else {
-                        this.links[id] = "";
-                    }
-                    
-                    this.saveLinks();
-                    this.updateUI();
-                    alert(`Hyperlink untuk Node ${id} berhasil diperbarui!`);
-                }
-            }
-        }
-
-        document.addEventListener("DOMContentLoaded", () => {
-            // Password: P@ssw0rd11
-            new HyperlinkController("UEBzc3cwcmQxMQ==");
-        });
-    </script>
 
 </body>
 </html>
