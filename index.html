@@ -1,0 +1,286 @@
+                                                                                                                                                                                                                                   <!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontrol Tombol Hyperlink - IoT Edition</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #ffffff;
+            background-image: 
+                radial-gradient(#e0e7ff 1.2px, transparent 1.2px),
+                linear-gradient(to right, #f8fafc 1px, transparent 1px),
+                linear-gradient(to bottom, #f8fafc 1px, transparent 1px);
+            background-size: 24px 24px, 40px 40px, 40px 40px;
+            padding: 20px;
+            color: #0f172a;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px 25px;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 25px -5px rgba(14, 165, 233, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            text-align: center;
+            width: 100%;
+            max-width: 420px;
+            position: relative;
+        }
+
+        .iot-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #166534;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #22c55e;
+            border-radius: 50%;
+            box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+            animation: pulse 1.8s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+            }
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 8px rgba(34, 197, 94, 0);
+            }
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+            }
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            color: #0f172a;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        h3 {
+            font-size: 0.95rem;
+            color: #0284c7;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-top: 25px;
+        }
+
+        .btn-control {
+            position: relative;
+            padding: 14px 20px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 100%;
+            word-break: break-all;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-control::before {
+            content: "☊";
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        #btn1 {
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+        }
+        #btn2 {
+            background: linear-gradient(135deg, #0d9488, #0f766e);
+        }
+        #btn3 {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+        }
+
+        .btn-control:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px -3px rgba(2, 132, 199, 0.3);
+            filter: brightness(1.05);
+        }
+
+        .btn-control:active {
+            transform: translateY(0);
+        }
+
+        @media (min-width: 640px) {
+            .container {
+                max-width: 720px;
+                padding: 35px;
+            }
+
+            .button-group {
+                flex-direction: row;
+            }
+
+            .btn-control {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="iot-status">
+            <span class="pulse-dot"></span> IoT Control Hub Active
+        </div>
+        <h2>PRACTICAL EXAM (IoT) - PSTS 1</h2>
+        <h3>ICT XI</h3>
+        
+        <div class="button-group">
+            <button id="btn1" class="btn-control">Tombol 1</button>
+            <button id="btn2" class="btn-control">Tombol 2</button>
+            <button id="btn3" class="btn-control">Tombol 3</button>
+        </div>
+    </div>
+
+    <script>
+        class HyperlinkController {
+            constructor(passwordHash) {
+                this.secretHash = passwordHash;
+                this.links = {
+                    1: "https://www.google.com",
+                    2: "",
+                    3: ""
+                };
+                this.init();
+            }
+
+            init() {
+                for (let i = 1; i <= 3; i++) {
+                    const btn = document.getElementById(`btn${i}`);
+                    btn.addEventListener('click', () => this.handleClick(i));
+                    btn.addEventListener('contextmenu', (e) => {
+                        e.preventDefault();
+                        this.editLinkWithAuth(i);
+                    });
+                }
+                this.updateUI();
+            }
+
+            updateUI() {
+                for (let i = 1; i <= 3; i++) {
+                    const btn = document.getElementById(`btn${i}`);
+                    if (this.links[i]) {
+                        try {
+                            const hostname = new URL(this.links[i]).hostname;
+                            btn.innerText = `Node ${i} (${hostname})`;
+                        } catch (e) {
+                            btn.innerText = `Node ${i}`;
+                        }
+                    } else {
+                        btn.innerText = `Node ${i} (Unset)`;
+                    }
+                }
+            }
+
+            handleClick(id) {
+                if (this.links[id]) {
+                    window.open(this.links[id], '_blank');
+                } else {
+                    this.editLinkWithAuth(id);
+                }
+            }
+
+            async hashPassword(password) {
+                const str = password.trim();
+                
+                if (window.crypto && crypto.subtle) {
+                    const encoder = new TextEncoder();
+                    const data = encoder.encode(str);
+                    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+                    const hashArray = Array.from(new Uint8Array(hashBuffer));
+                    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+                }
+
+                let h1 = 0xdeadbeef, h2 = 0x41c6ce57;
+                for (let i = 0; i < str.length; i++) {
+                    const ch = str.charCodeAt(i);
+                    h1 = Math.imul(h1 ^ ch, 2654435761);
+                    h2 = Math.imul(h2 ^ ch, 1597334677);
+                }
+                h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+                h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+                return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(16);
+            }
+
+            async authenticate() {
+                const inputPassword = prompt("Masukkan password untuk mengubah hyperlink:");
+                if (inputPassword === null) return false;
+
+                const inputHash = await this.hashPassword(inputPassword);
+                if (inputHash === this.secretHash) {
+                    return true;
+                } else {
+                    alert("Password salah! Akses ditolak.");
+                    return false;
+                }
+            }
+
+            async editLinkWithAuth(id) {
+                const isAuthenticated = await this.authenticate();
+                if (!isAuthenticated) return;
+
+                let userUrl = prompt("Masukkan Hyperlink baru:", this.links[id] || "https://");
+                if (userUrl !== null && userUrl.trim() !== "") {
+                    userUrl = userUrl.trim();
+                    if (!userUrl.startsWith("http://") && !userUrl.startsWith("https://")) {
+                        userUrl = "https://" + userUrl;
+                    }
+                    this.links[id] = userUrl;
+                    this.updateUI();
+                    alert(`Hyperlink untuk Node ${id} berhasil diperbarui!`);
+                }
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            new HyperlinkController("159cb4a52efcff34114ce996e3845fb3bd540be8beee90eef53856d11e51b3cd");
+        });
+    </script>
+
+</body>
+</html>
