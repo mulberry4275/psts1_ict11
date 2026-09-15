@@ -182,35 +182,37 @@
             constructor(passwordHash) {
                 this.secretHash = passwordHash;
                 this.storageKey = 'ict_exam_links';
+                
+                // =========================================================
+                // ISIKAN LINK MANUAL ANDA DI SINI
+                // =========================================================
                 this.defaultLinks = {
-                    1: "",
-                    2: "",
-                    3: ""
+                    1: "https://drive.google.com", // Link untuk Tombol 1
+                    2: "https://forms.google.com", // Link untuk Tombol 2
+                    3: "https://classroom.google.com" // Link untuk Tombol 3
                 };
-                // Memuat link tersimpan dari localStorage
+                
                 this.links = this.loadLinks();
                 this.init();
             }
 
-            // Fungsi memuat data link dari penyimpanan browser (localStorage)
             loadLinks() {
                 const savedData = localStorage.getItem(this.storageKey);
                 if (savedData) {
                     try {
                         return JSON.parse(savedData);
                     } catch (e) {
-                        console.error("Gagal membaca data dari localStorage:", e);
+                        console.error("Gagal membaca data tersimpan:", e);
                     }
                 }
                 return { ...this.defaultLinks };
             }
 
-            // Fungsi menyimpan data link ke penyimpanan browser (localStorage)
             saveLinks() {
                 try {
                     localStorage.setItem(this.storageKey, JSON.stringify(this.links));
                 } catch (e) {
-                    console.error("Gagal menyimpan data ke localStorage:", e);
+                    console.error("Gagal menyimpan data:", e);
                 }
             }
 
@@ -237,7 +239,7 @@
                             btn.innerText = `Node ${i}`;
                         }
                     } else {
-                        btn.innerText = `Node ${i} (Belum diatur)`;
+                        btn.innerText = `Node ${i} (Belum Diatur)`;
                     }
                 }
             }
@@ -265,7 +267,7 @@
             editLinkWithAuth(id) {
                 if (!this.authenticate()) return;
 
-                let userUrl = prompt("Masukkan Hyperlink baru (kosongkan untuk menghapus):", this.links[id] || "https://");
+                let userUrl = prompt("Masukkan Hyperlink baru:", this.links[id] || "https://");
                 if (userUrl !== null) {
                     userUrl = userUrl.trim();
                     if (userUrl !== "") {
@@ -274,11 +276,9 @@
                         }
                         this.links[id] = userUrl;
                     } else {
-                        // Jika dialog dikosongkan, link dihapus
                         this.links[id] = "";
                     }
                     
-                    // Simpan data perubahan
                     this.saveLinks();
                     this.updateUI();
                     alert(`Hyperlink untuk Node ${id} berhasil diperbarui!`);
@@ -287,7 +287,7 @@
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            // "UEBzc3cwcmQxMQ==" merupakan enkripsi Base64 dari "P@ssw0rd11"
+            // Password: P@ssw0rd11
             new HyperlinkController("UEBzc3cwcmQxMQ==");
         });
     </script>
