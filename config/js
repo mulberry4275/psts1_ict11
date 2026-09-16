@@ -1,0 +1,31 @@
+const CONFIG_TOMBOL = {
+    // Pengaturan Tombol "Soal Ujian (Praktik IoT)"
+    soalUjian: {
+        aktif: true // Ubah ke false jika ingin menonaktifkan
+    },
+
+    // Pengaturan Tombol "Upload Jawaban"
+    uploadJawaban: {
+        aktif: true // Ubah ke false jika ingin menonaktifkan
+    }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    const btnSoal = document.getElementById('btnSoalUjian');
+    const btnUpload = document.getElementById('openModalBtn');
+
+    // 1. Logika untuk Tombol Soal Ujian
+    if (!CONFIG_TOMBOL.soalUjian.aktif) {
+        btnSoal.classList.add('disabled');
+        btnSoal.removeAttribute('href'); // Menghapus fungsi link
+        btnSoal.setAttribute('aria-disabled', 'true');
+        btnSoal.textContent += " (Belum Dibuka)";
+    }
+
+    // 2. Logika untuk Tombol Upload Jawaban
+    if (!CONFIG_TOMBOL.uploadJawaban.aktif) {
+        btnUpload.classList.add('disabled');
+        btnUpload.disabled = true; // Menutup akses klik ke Pop-Up
+        btnUpload.textContent += " (Belum Dibuka)";
+    }
+});
