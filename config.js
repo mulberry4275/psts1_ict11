@@ -1,6 +1,6 @@
 const CONFIG_TOMBOL = {
-    soalUjian: { aktif: false },
-    uploadJawaban: { aktif: false }
+    soalUjian: { aktif: true },
+    uploadJawaban: { aktif: true }
 };
 
 document.addEventListener('DOMContentLoaded', () => {
