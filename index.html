@@ -36,8 +36,14 @@
 
         h1 {
             color: #333333;
-            margin-bottom: 25px;
+            margin-bottom: 10px;
             font-size: 1.8rem;
+        }
+
+        h3 {
+            color: #666666;
+            font-size: 1rem;
+            margin-bottom: 25px;
         }
 
         /* Group tombol (Flexbox) */
@@ -49,7 +55,9 @@
 
         /* Desain umum tombol */
         .btn {
-            display: block;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding: 14px 20px;
             text-decoration: none;
             color: white;
@@ -58,12 +66,26 @@
             border-radius: 8px;
             transition: all 0.3s ease;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border: none;
+            cursor: pointer;
+            width: 100%;
         }
 
         /* Efek hover (saat kursor di atas tombol) */
-        .btn:hover {
+        .btn:hover:not(.disabled) {
             transform: translateY(-2px);
             box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* TAMPILAN UNTUK TOMBOL NON-AKTIF (DISABLED) */
+        .btn.disabled, 
+        .btn:disabled {
+            background-color: #cccccc !important;
+            color: #666666 !important;
+            cursor: not-allowed !important;
+            box-shadow: none !important;
+            transform: none !important;
+            pointer-events: none; /* Mencegah klik di beberapa browser */
         }
 
         /* Warna masing-masing tombol */
@@ -87,6 +109,69 @@
         .btn-github:hover {
             background-color: #1b1e21;
         }
+
+        /* STYLE UNTUK POP-UP (MODAL) */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            padding: 20px;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-box {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            transform: scale(0.8);
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-box {
+            transform: scale(1);
+        }
+
+        .modal-box h2 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 1.4rem;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #888;
+        }
+
+        .close-btn:hover {
+            color: #000;
+        }
+
+        /* Responsif Media Query */
         @media (min-width: 600px) {
             .container {
                 max-width: 700px;
@@ -106,14 +191,51 @@
 <body>
 
     <div class="container">
-        <h1>PRACTICAL EXAM QUESTION -  ICT XI</h1>
-        <h3>MIDTERM TEST OF 1st SEMESTER - ACADEMIC YEAR OF 2026/2027</h3></br>
+        <h1>PRACTICAL EXAM QUESTION - ICT XI</h1>
+        <h3>MIDTERM TEST OF 1st SEMESTER - ACADEMIC YEAR OF 2026/2027</h3>
+        
         <div class="button-group">
             <a href="https://drive.google.com/file/d/1sB5PdfaTXRTdFhxnElIzU3U4_qM8h9u4/view?usp=drive_link" target="_blank" class="btn btn-google">Tata Tertib Peserta Ujian Praktik</a>
-            <a href="https://drive.google.com/file/d/1GamGVa9eGe0sphWDrAES9fQ_deZaHBrh/view?usp=sharing" target="_blank" class="btn btn-youtube">Soal Ujian (Praktik IoT)</a>
-            <a href="https://forms.gle/U5vHLev7F88e5gdg7" target="_blank" class="btn btn-github">Upload Jawaban</a>
+            
+            <!-- Ditambahkan id="btnSoalUjian" pada tautan soal -->
+            <a id="btnSoalUjian" href="https://drive.google.com/file/d/1GamGVa9eGe0sphWDrAES9fQ_deZaHBrh/view?usp=sharing" target="_blank" class="btn btn-youtube">Soal Ujian (Praktik IoT)</a>
+            
+            <!-- Tombol Upload Jawaban -->
+            <button id="openModalBtn" class="btn btn-github">Upload Jawaban</button>
         </div>
     </div>
 
+    <div class="modal-overlay" id="uploadModal">
+        <div class="modal-box">
+            <button class="close-btn" id="closeModalBtn">&times;</button>
+            <h2>Pilih Sekolah - Upload Jawaban</h2>
+            <div class="button-group">
+                <a href="https://forms.gle/U5vHLev7F88e5gdg7" target="_blank" class="btn btn-google">SMA ABBS Surakarta</a>
+                <a href="https://bit.ly/4Ah6YG4" target="_blank" class="btn btn-youtube">SMA ABBS Sukoharjo</a>
+                <a href="https://forms.gle/FGf2uVqnvBDnYDQn8" target="_blank" class="btn btn-github">SMA ABBS Boyolali</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script>
+        const openModalBtn = document.getElementById('openModalBtn');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const uploadModal = document.getElementById('uploadModal');
+
+        openModalBtn.addEventListener('click', () => {
+            if (!openModalBtn.disabled) {
+                uploadModal.classList.add('active');
+            }
+        });
+        closeModalBtn.addEventListener('click', () => {
+            uploadModal.classList.remove('active');
+        });
+        window.addEventListener('click', (event) => {
+            if (event.target === uploadModal) {
+                uploadModal.classList.remove('active');
+            }
+        });
+    </script>
 </body>
 </html>
